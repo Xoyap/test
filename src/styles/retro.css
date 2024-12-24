@@ -1,0 +1,124 @@
+/* Base retro styles */
+@font-face {
+  font-family: 'Press Start 2P';
+  src: url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+}
+
+:root {
+  --pixel-size: 2px;
+  --grid-color: rgba(255, 255, 255, 0.1);
+  --scanline-size: 2px;
+}
+
+/* CRT Screen Effect */
+.crt-screen {
+  position: relative;
+  overflow: hidden;
+}
+
+.crt-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    transparent 50%,
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Pixel Border */
+.pixel-border {
+  border: var(--pixel-size) solid #fff;
+  box-shadow: 
+    inset calc(var(--pixel-size) * -1) calc(var(--pixel-size) * -1) 0 0 #888,
+    calc(var(--pixel-size)) calc(var(--pixel-size)) 0 0 #000;
+}
+
+/* Buttons */
+.pixel-button {
+  background: #444;
+  border: none;
+  padding: 0.5rem;
+  color: white;
+  position: relative;
+  transition: all 0.1s;
+  image-rendering: pixelated;
+}
+
+.pixel-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: var(--pixel-size) solid #fff;
+  box-shadow: 
+    inset calc(var(--pixel-size) * -1) calc(var(--pixel-size) * -1) 0 0 #888,
+    calc(var(--pixel-size)) calc(var(--pixel-size)) 0 0 #000;
+}
+
+.pixel-button:active {
+  transform: translate(2px, 2px);
+}
+
+/* Slider */
+.pixel-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 24px;
+  background: #2d3748;
+  outline: none;
+  border: var(--pixel-size) solid #fff;
+  box-shadow: 
+    inset calc(var(--pixel-size) * -1) calc(var(--pixel-size) * -1) 0 0 #888,
+    calc(var(--pixel-size)) calc(var(--pixel-size)) 0 0 #000;
+}
+
+.pixel-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #22c55e;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px #000;
+  cursor: pointer;
+}
+
+/* Animations */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes powerup {
+  0% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.1); filter: brightness(1.5); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+@keyframes scroll-text {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.blink {
+  animation: blink 1s steps(1) infinite;
+}
+
+.powerup {
+  animation: powerup 0.3s ease-in-out;
+}
+
+.scroll-text {
+  animation: scroll-text 15s linear infinite;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  :root {
+    --pixel-size: 1px;
+    --scanline-size: 1px;
+  }
+}
